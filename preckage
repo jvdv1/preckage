@@ -1,5 +1,13 @@
 #!/bin/bash
 
 if [ $1 = -h ]; then
-  echo "help scripts"
+  echo "preckage [options] [package-name]
+  options: 
+  install | install package(s)
+  uninstall | uninstall package(s)
+  clean | clean cache
+  autoremove | remove unnessary deps
+  search | search for package(s)
+  info | find info about package(s)
+  "
 fi
