@@ -18,7 +18,7 @@ preckage -h
 > Most distros have not been tested, but are pressumed to work.
 
 ```bash
-curl the-install-script | sh
+curl -s https://raw.githubusercontent.com/jvdv1/preckage/refs/heads/master/install | bash
 ```
 
 ## Config:
