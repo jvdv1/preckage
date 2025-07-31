@@ -1,6 +1,51 @@
 #!/bin/bash
 mkdir -p ~/.cache/preckage/
 
+# Check what package manager there are.
+if test -f /usr/bin/dnf; then
+  export pkg_mgr=dnf
+elif test -f /usr/bin/apt; then
+  export pkg_mgr=apt
+elif test -f /usr/bin/pacman; then
+  export pkg_mgr=pacman
+elif test -f /usr/bin/xbps-install; then
+  export pkg_mgr=xbps-install
+elif test -f /usr/bin/apk; then
+  export pkg_mgr=apk
+elif test -f /usr/bin/emerge; then
+  export pkg_mgr=emerge
+else
+  return 0
+fi
+
+# flatpak
+if test -f /usr/bin/flatpak; then
+  export flatpak=yes
+else
+  export flatpak=no
+fi
+
+# pip
+if test -f /usr/bin/pip; then
+  export pip=yes
+else
+  export pip=no
+fi
+
+# snap
+if test -f /usr/bin/snap; then
+  export snap=yes
+else
+  export snap=no
+fi
+
+# nix
+if test -f /usr/bin/nix; then
+  export nix=yes
+else
+  export nix=no
+fi
+
 if [ "$1" = "-h" ] || [[ -z "$1" ]]; then
   echo "Usage:
 preckage [options] (package-name)
