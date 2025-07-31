@@ -13,6 +13,8 @@ if test -f /usr/bin/dnf; then
   export autoremove="dnf autoremove"
   export clean="dnf clean all"
   export list="dnf list --installed"
+  export info="dnf info"
+  export upgrade="dnf upgrade"
 elif test -f /usr/bin/apt; then
   export pkg_mgr=apt
   export install="apt install"
@@ -21,21 +23,68 @@ elif test -f /usr/bin/apt; then
   export autoremove="apt autoremove"
   export clean="apt clean"
   export list="apt list --installed"
+  export info="apt show"
+  export upgrade="apt update && apt upgrade"
 elif test -f /usr/bin/pacman; then
   export pkg_mgr=pacman
   export install="pacman -S"
   export search="pacman -Ss"
   export remove="pacman -Rs"
+  export autoremove="pacman -Rns $(pacman -Qdtq)"
+  export clean="pacman -Sc"
+  export list="pacman -Qe"
+  export info="pacman -Qi"
+  export upgrade="pacman -Syu"
 elif test -f /usr/bin/xbps-install; then
   export pkg_mgr=xbps-install
+  export install="xbps-install -S"
+  export search="xbps-query -Rs"
+  export remove="xbps-remove -R"
+  export autoremove="xbps-remove -O"
+  export clean="xbps-remove -c"
+  export list="xbps-query -l"
+  export info="xbps-query -f"
+  export upgrade="xbps-install -Su"
 elif test -f /usr/bin/apk; then
   export pkg_mgr=apk
+  export install="apk add"
+  export search="apk search"
+  export remove="apk del"
+  export autoremove="apk del --purge $(apk info -q --depends --recursive $(apk info -q --installed))"
+  export clean="apk cache clean"
+  export list="apk info -v"
+  export info="apk info -v"
+  export upgrade="apk upgrade"
 elif test -f /usr/bin/emerge; then
   export pkg_mgr=emerge
+  export install="emerge --ask"
+  export search="eix"
+  export remove="emerge --ask --depclean"
+  export autoremove="emerge --ask --depclean"
+  export clean="emerge --ask --verbose --depclean"
+  export list="eix -I"
+  export info="eix"
+  export upgrade="emerge --ask --update --deep --newuse @world"
 elif test -f /usr/bin/zypper; then
   export pkg_mgr=zypper
+  export install="zypper install"
+  export search="zypper search"
+  export remove="zypper remove"
+  export autoremove="zypper remove --clean-deps"
+  export clean="zypper clean"
+  export list="zypper se --installed-only"
+  export info="zypper info"
+  export upgrade="zypper update"
 elif test -f /usr/bin/eopkg; then
   export pkg_mgr=eopkg
+  export install="eopkg it"
+  export search="eopkg se"
+  export remove="eopkg rm"
+  export autoremove="eopkg rm -u"
+  export clean="eopkg dc"
+  export list="eopkg li"
+  export info="eopkg info"
+  export upgrade="eopkg up"
 else
   return 0
 fi
@@ -44,20 +93,42 @@ fi
 if test -f /usr/bin/yay; then
   export yay=yes
   export yayinstall="yay -S"
+  export yaysearch="yay -Ss"
+  export yayremove="yay -Rns"
+  export yayautoremove="yay -Rns $(yay -Qdtq)"
+  export yayclean="yay -Sc"
+  export yaylist="yay -Qe"
+  export yayinfo="yay -Qi"
+  export yayupgrade="yay -Syu"
 else
   export yay=no
 fi
 
 if test -f /usr/bin/paru; then
   export paru=yes
-  export paruinstall="paru -S"
+  export paruinstall="paru -S" 
+  export parusearch="paru -Ss"
+  export paruremove="paru -Rns"
+  export paruautoremove="paru -Rns $(paru -Qdtq)"
+  export paruclean="paru -Sc"
+  export parulist="paru -Qe"
+  export paruinfo="paru -Qi"
+  export paruupgrade="paru -Syu"
 else
-  export yay=no
+  export paru=no
 fi
 
 # flatpak
 if test -f /usr/bin/flatpak; then
   export flatpak=yes
+  export flatpakinstall="flatpak install"
+  export flatpaksearch="flatpak search"
+  export flatpakremove="flatpak uninstall"
+  export flatpakautoremove="flatpak uninstall --unused"
+  export flatpakclean="flatpak uninstall --unused"
+  export flatpaklist="flatpak list"
+  export flatpakinfo="flatpak info"
+  export flatpakupgrade="flatpak update"
 else
   export flatpak=no
 fi
@@ -65,6 +136,14 @@ fi
 # pip
 if test -f /usr/bin/pip; then
   export pip=yes
+  export pipinstall="pip install"
+  export pipsearch="pip search"
+  export pipremove="pip uninstall"
+  export pipautoremove="pip-autoremove"
+  export pipclean="pip cache purge"
+  export piplist="pip list"
+  export pipinfo="pip show"
+  export pipupgrade="pip install --upgrade"
 else
   export pip=no
 fi
@@ -72,6 +151,14 @@ fi
 # snap
 if test -f /usr/bin/snap; then
   export snap=yes
+  export snapinstall="snap install"
+  export snapsearch="snap find"
+  export snapremove="snap remove"
+  export snapautoremove="snap remove --purge"
+  export snapclean="snap remove --purge"
+  export snaplist="snap list"
+  export snapinfo="snap info"
+  export snapupgrade="snap refresh"
 else
   export snap=no
 fi
@@ -80,6 +167,13 @@ fi
 if test -f /usr/bin/nix; then
   export nix=yes
   export nixinstall="nix-env -iA nixos."
+  export nixsearch="nix-env -qaP"
+  export nixremove="nix-env -e"
+  export nixautoremove="nix-env --delete-generations old"
+  export nixclean="nix-collect-garbage"
+  export nixlist="nix-env -q"
+  export nixinfo="nix-env -qa"
+  export nixupgrade="nix-env -u"
 else
   export nix=no
 fi
