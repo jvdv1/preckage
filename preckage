@@ -1,23 +1,19 @@
 #!/bin/bash
 mkdir -p ~/.cache/preckage/
 
-help = "preckage [options] [package-name]
-  options: 
-  install | install package(s)
-  uninstall | uninstall package(s)
-  clean | clean cache
-  autoremove | remove unnessary deps
-  search | search for package(s)
-  info | find info about package(s)
-  "
-if [ $1 = -h ]; then
-  echo $help
-elif [ $1 =  ]; then
-  echo $help
-elif [ $1 = install ]; then
+if [ "$1" = "-h" ] || [ "$1" = " " ]; then
+  echo "Usage:
+preckage [options] (package-name)
+
+Options:
+install | install package(s)
+uninstall | uninstall package(s)
+clean | clean cache
+autoremove | remove unnessary deps
+search | search for package(s)
+info | find info about package(s)"
+elif [ "$1" = install ]; then
   echo "installing $2"
-elif [ $1 = uninstall ];
+elif [ "$1" = uninstall ]; then
   echo "uninstalling $2"
-else
-  echo $help
 fi
