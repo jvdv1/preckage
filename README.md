@@ -1,4 +1,4 @@
-# Preckage - a bash-based alias that just works.
+# Preckage - a blazing fast package manager.
 
 Preckage is one singular bash script that works like an alias but is actually a script to make your life much easier! 
 
