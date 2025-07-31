@@ -18,4 +18,6 @@ elif [ $1 = install ]; then
   echo "installing $2"
 elif [ $1 = uninstall ];
   echo "uninstalling $2"
+else
+  echo $help
 fi
