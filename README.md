@@ -13,3 +13,15 @@ Run to find help script.
 ```bash
 preckage -h
 ```
+
+## Install:
+> Most distros have not been tested, but are pressumed to work.
+
+```bash
+curl the-install-script | sh
+```
+
+## Config:
+
+Default config and options are in `~/.config/preckage/config.txt`
+
