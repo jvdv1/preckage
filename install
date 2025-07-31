@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Make needed directories:
+mkdir -v ~/.config/preckage/
+mkdir -v ~/.cache/preckage/
+
+# Movin
+chmod +x preckage
+echo "
+What shall I use?
+1. sudo
+2. doas
+3. su
+"
+read -p "Choose: " chosen
+if [ "${chosen}" = 1 ] || [ "${chosen}" = sudo ]; then
+  export admin="sudo"
+elif [ "${chosen}" = 2 ] || [ "${chosen}" = doas ]; then
+  export admin="doas"
+elif [ "${chosen}" = 3 ] || [ "${chosen}" = su ]; then
+  su -c "mv preckage /usr/bin/"
+fi
+
+${admin} mv preckage /usr/bin/
