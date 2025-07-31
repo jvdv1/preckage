@@ -10,4 +10,6 @@ if [ $1 = -h ]; then
   search | search for package(s)
   info | find info about package(s)
   "
+elif [ $1 = install ]; then
+  echo "installing something..."
 fi
