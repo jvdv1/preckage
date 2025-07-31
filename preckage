@@ -6,7 +6,7 @@ if [ $1 = -h ]; then
   install | install package(s)
   uninstall | uninstall package(s)
   clean | clean cache
-  autoremove | remove unnessary deps
+  autoremove | remove unnessary dep
   search | search for package(s)
   info | find info about package(s)
   "
