@@ -1,21 +1,58 @@
 #!/bin/bash
+
+#NO SUPPORT FOR BEDROCKLINUX
+
 mkdir -p ~/.cache/preckage/
 
 # Check what package manager there are.
 if test -f /usr/bin/dnf; then
   export pkg_mgr=dnf
+  export install="dnf install"
+  export search="dnf search"
+  export remove="dnf remove"
+  export autoremove="dnf autoremove"
+  export clean="dnf clean all"
+  export list="dnf list --installed"
 elif test -f /usr/bin/apt; then
   export pkg_mgr=apt
+  export install="apt install"
+  export search="apt search"
+  export remove="apt remove"
+  export autoremove="apt autoremove"
+  export clean="apt clean"
+  export list="apt list --installed"
 elif test -f /usr/bin/pacman; then
   export pkg_mgr=pacman
+  export install="pacman -S"
+  export search="pacman -Ss"
+  export remove="pacman -Rs"
 elif test -f /usr/bin/xbps-install; then
   export pkg_mgr=xbps-install
 elif test -f /usr/bin/apk; then
   export pkg_mgr=apk
 elif test -f /usr/bin/emerge; then
   export pkg_mgr=emerge
+elif test -f /usr/bin/zypper; then
+  export pkg_mgr=zypper
+elif test -f /usr/bin/eopkg; then
+  export pkg_mgr=eopkg
 else
   return 0
+fi
+
+# check which aur helper, if any.
+if test -f /usr/bin/yay; then
+  export yay=yes
+  export yayinstall="yay -S"
+else
+  export yay=no
+fi
+
+if test -f /usr/bin/paru; then
+  export paru=yes
+  export paruinstall="paru -S"
+else
+  export yay=no
 fi
 
 # flatpak
@@ -42,6 +79,7 @@ fi
 # nix
 if test -f /usr/bin/nix; then
   export nix=yes
+  export nixinstall="nix-env -iA nixos."
 else
   export nix=no
 fi
