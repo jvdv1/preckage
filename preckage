@@ -218,83 +218,103 @@ elif [ "$1" = upgrade ] || [ "$1" = up ]; then
 fi
 
 if [ "$1" = --flatpak ] || [ "$1" = -flat ] || [ "$1" = -f ]; then
-  if [ "$2" = install ] || [ "$2" = in ]; then
-    ${flatpakinstall} $3
-  elif [ "$2" = remove ] || [ "$2" = re ]; then
-    ${flatpakremove} $3
-  elif [ "$2" = clean ] || [ "$2" = cl ]; then
-    ${flatpakclean}
-  elif [ "$2" = autoremove ] || [ "$2" = au ]; then
-    ${flatpakautoremove}
-  elif [ "$2" = search ] || [ "$2" = se ]; then
-    ${flatpaksearch} $3
-  elif [ "$2" = info ] || [ "$2" = inf ]; then
-    ${flatpakinfo} $3
-  elif [ "$2" = upgrade ] || [ "$2" = up ]; then
-    ${flatpakupgrade}
+  if [ ${flatpak} = yes ]; then
+    if [ "$2" = install ] || [ "$2" = in ]; then
+      ${flatpakinstall} $3
+    elif [ "$2" = remove ] || [ "$2" = re ]; then
+      ${flatpakremove} $3
+    elif [ "$2" = clean ] || [ "$2" = cl ]; then
+      ${flatpakclean}
+    elif [ "$2" = autoremove ] || [ "$2" = au ]; then
+      ${flatpakautoremove}
+    elif [ "$2" = search ] || [ "$2" = se ]; then
+      ${flatpaksearch} $3
+    elif [ "$2" = info ] || [ "$2" = inf ]; then
+      ${flatpakinfo} $3
+    elif [ "$2" = upgrade ] || [ "$2" = up ]; then
+      ${flatpakupgrade}
+    fi
+  else
+    echo "No flatpak"
   fi
-elif [ "$1" = --snap ] || [ "$1" = -snap] || [ "$1" = -s ]; then
-  if [ "$2" = install ] || [ "$2" = in ]; then
-    ${snapinstall} $3
-  elif [ "$2" = remove ] || [ "$2" = re ]; then
-    ${snapremove} $3
-  elif [ "$2" = clean ] || [ "$2" = cl ]; then
-    ${snapclean}
-  elif [ "$2" = autoremove ] || [ "$2" = au ]; then
-    ${snapautoremove}
-  elif [ "$2" = search ] || [ "$2" = se ]; then
-    ${snapsearch} $3
-  elif [ "$2" = info ] || [ "$2" = inf ]; then
-    ${snapinfo} $3
-  elif [ "$2" = upgrade ] || [ "$2" = up ]; then
-    ${snapupgrade}
+elif [ "$1" = --snap ] || [ "$1" = -snap ] || [ "$1" = -s ]; then
+  if [ ${snap} = yes ]; then
+    if [ "$2" = install ] || [ "$2" = in ]; then
+      ${snapinstall} $3
+    elif [ "$2" = remove ] || [ "$2" = re ]; then
+      ${snapremove} $3
+    elif [ "$2" = clean ] || [ "$2" = cl ]; then
+      ${snapclean}
+    elif [ "$2" = autoremove ] || [ "$2" = au ]; then
+      ${snapautoremove}
+    elif [ "$2" = search ] || [ "$2" = se ]; then
+      ${snapsearch} $3
+    elif [ "$2" = info ] || [ "$2" = inf ]; then
+      ${snapinfo} $3
+    elif [ "$2" = upgrade ] || [ "$2" = up ]; then
+      ${snapupgrade}
+    fi
+  else
+    echo "No snap"
   fi
 elif [ "$1" = --pip ] || [ "$1" = -pip ] || [ "$1" = -p ]; then
-  if [ "$2" = install ] || [ "$2" = in ]; then
-    ${pipinstall} $3
-  elif [ "$2" = remove ] || [ "$2" = re ]; then
-    ${pipremove} $3
-  elif [ "$2" = clean ] || [ "$2" = cl ]; then
-    ${pipclean}
-  elif [ "$2" = autoremove ] || [ "$2" = au ]; then
-    ${pipautoremove}
-  elif [ "$2" = search ] || [ "$2" = se ]; then
-    ${pipsearch} $3
-  elif [ "$2" = info ] || [ "$2" = inf ]; then
-    ${pipinfo} $3
-  elif [ "$2" = upgrade ] || [ "$2" = up ]; then
-    ${pipupgrade}
+  if [ ${pip} = yes ]; then
+    if [ "$2" = install ] || [ "$2" = in ]; then
+      ${pipinstall} $3
+    elif [ "$2" = remove ] || [ "$2" = re ]; then
+      ${pipremove} $3
+    elif [ "$2" = clean ] || [ "$2" = cl ]; then
+      ${pipclean}
+    elif [ "$2" = autoremove ] || [ "$2" = au ]; then
+      ${pipautoremove}
+    elif [ "$2" = search ] || [ "$2" = se ]; then
+      ${pipsearch} $3
+    elif [ "$2" = info ] || [ "$2" = inf ]; then
+      ${pipinfo} $3
+    elif [ "$2" = upgrade ] || [ "$2" = up ]; then
+      ${pipupgrade}
+    fi
+  else
+    echo "No pip"
   fi
 elif [ "$1" = --yay ] || [ "$1" = -yay ] || [ "$1" = -y ]; then
-  if [ "$2" = install ] || [ "$2" = in ]; then
-    ${yayinstall} $3
-  elif [ "$2" = remove ] || [ "$2" = re ]; then
-    ${yayremove} $3
-  elif [ "$2" = clean ] || [ "$2" = cl ]; then
-    ${yayclean}
-  elif [ "$2" = autoremove ] || [ "$2" = au ]; then
-    ${yayautoremove}
-  elif [ "$2" = search ] || [ "$2" = se ]; then
-    ${yaysearch} $3
-  elif [ "$2" = info ] || [ "$2" = inf ]; then
-    ${yayinfo} $3
-  elif [ "$2" = upgrade ] || [ "$2" = up ]; then
-    ${flatpakupgrade}
+  if [ ${yay} = yes ]; then
+    if [ "$2" = install ] || [ "$2" = in ]; then
+      ${yayinstall} $3
+    elif [ "$2" = remove ] || [ "$2" = re ]; then
+      ${yayremove} $3
+    elif [ "$2" = clean ] || [ "$2" = cl ]; then
+      ${yayclean}
+    elif [ "$2" = autoremove ] || [ "$2" = au ]; then
+      ${yayautoremove}
+    elif [ "$2" = search ] || [ "$2" = se ]; then
+      ${yaysearch} $3
+    elif [ "$2" = info ] || [ "$2" = inf ]; then
+      ${yayinfo} $3
+    elif [ "$2" = upgrade ] || [ "$2" = up ]; then
+      ${flatpakupgrade}
+    fi
+  else
+    echo "No yay"
   fi
 elif [ "$1" = --paru ] || [ "$1" = -paru ] || [ "$1" = -pa ]; then
-  if [ "$2" = install ] || [ "$2" = in ]; then
-    ${paruinstall} $3
-  elif [ "$2" = remove ] || [ "$2" = re ]; then
-    ${paruremove} $3
-  elif [ "$2" = clean ] || [ "$2" = cl ]; then
-    ${paruclean}
-  elif [ "$2" = autoremove ] || [ "$2" = au ]; then
-    ${paruautoremove}
-  elif [ "$2" = search ] || [ "$2" = se ]; then
-    ${parusearch} $3
-  elif [ "$2" = info ] || [ "$2" = inf ]; then
-    ${paruinfo} $3
-  elif [ "$2" = upgrade ] || [ "$2" = up ]; then
-    ${paruupgrade}
+  if [ ${paru} = yes ]; then
+    if [ "$2" = install ] || [ "$2" = in ]; then
+      ${paruinstall} $3
+    elif [ "$2" = remove ] || [ "$2" = re ]; then
+      ${paruremove} $3
+    elif [ "$2" = clean ] || [ "$2" = cl ]; then
+      ${paruclean}
+    elif [ "$2" = autoremove ] || [ "$2" = au ]; then
+      ${paruautoremove}
+    elif [ "$2" = search ] || [ "$2" = se ]; then
+      ${parusearch} $3
+    elif [ "$2" = info ] || [ "$2" = inf ]; then
+      ${paruinfo} $3
+    elif [ "$2" = upgrade ] || [ "$2" = up ]; then
+      ${paruupgrade}
+    fi
+  else
+    echo "No paru"
   fi
 fi
