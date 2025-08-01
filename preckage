@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#NO SUPPORT FOR BEDROCKLINUX
+# NO SUPPORT FOR BEDROCKLINUX
 
 mkdir -p ~/.cache/preckage/
 export admin="sudo" # change to doas if you do not have sudo.
