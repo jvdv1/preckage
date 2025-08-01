@@ -3,6 +3,7 @@
 #NO SUPPORT FOR BEDROCKLINUX
 
 mkdir -p ~/.cache/preckage/
+export admin="sudo" # change to doas if you do not have sudo.
 
 # Check what package manager there are.
 if test -f /usr/bin/dnf; then
@@ -106,7 +107,7 @@ fi
 
 if test -f /usr/bin/paru; then
   export paru=yes
-  export paruinstall="paru -S" 
+  export paruinstall="paru -S"
   export parusearch="paru -Ss"
   export paruremove="paru -Rns"
   export paruautoremove="paru -Rns $(paru -Qdtq)"
@@ -180,17 +181,120 @@ fi
 
 if [ "$1" = "-h" ] || [[ -z "$1" ]]; then
   echo "Usage:
-preckage [options] (package-name)
+preckage [arg] [options] (package-name)
+
+Arguments:
+-f, -flat, --flatpak | to use flatpak
+-s, -snap, --snap | to use snap
+-p, -pip, --pip | to use pip
+-y, -yay, --yay | to use yay
+-pa, -paru, --paru | to use paru
+Example: preckage -f se boxes | this will search for 'boxes' in flatpak
 
 Options:
-install | install package(s)
-uninstall | uninstall package(s)
-clean | clean cache
-autoremove | remove unnessary dep
-search | search for package(s)
-info | find info about package(s)"
-elif [ "$1" = install ]; then
-  echo "installing $2"
-elif [ "$1" = uninstall ]; then
-  echo "uninstalling $2"
+in, install | install package(s)
+re, remove | remove package(s)
+cl, clean | clean cache
+au, autoremove | remove unnessary dep
+se, search | search for package(s)
+inf, info | find info about package(s)
+up, upgrade | update all packages
+Example: preckage se boxes | this will search for 'boxes' in sys repo."
+
+elif [ "$1" = install ] || [ "$1" = in ]; then
+  ${admin} ${install} $2
+elif [ "$1" = remove ] || [ "$1" = re ]; then
+  ${admin} ${remove} $2
+elif [ "$1" = clean ] || [ "$1" = cl ]; then
+  ${admin} ${clean}
+elif [ "$1" = autoremove ] || [ "$1" = au ]; then
+  ${admin} ${autoremove}
+elif [ "$1" = search ] || [ "$1" = se ]; then
+  ${search} $2
+elif [ "$1" = info ] || [ "$1" = inf ]; then
+  ${info} $2
+elif [ "$1" = upgrade ] || [ "$1" = up ]; then
+  ${admin} ${upgrade}
+fi
+
+if [ "$1" = --flatpak ] || [ "$1" = -flat ] || [ "$1" = -f ]; then
+  if [ "$2" = install ] || [ "$2" = in ]; then
+    ${flatpakinstall} $3
+  elif [ "$2" = remove ] || [ "$2" = re ]; then
+    ${flatpakremove} $3
+  elif [ "$2" = clean ] || [ "$2" = cl ]; then
+    ${flatpakclean}
+  elif [ "$2" = autoremove ] || [ "$2" = au ]; then
+    ${flatpakautoremove}
+  elif [ "$2" = search ] || [ "$2" = se ]; then
+    ${flatpaksearch} $3
+  elif [ "$2" = info ] || [ "$2" = inf ]; then
+    ${flatpakinfo} $3
+  elif [ "$2" = upgrade ] || [ "$2" = up ]; then
+    ${flatpakupgrade}
+  fi
+elif [ "$1" = --snap ] || [ "$1" = -snap] || [ "$1" = -s ]; then
+  if [ "$2" = install ] || [ "$2" = in ]; then
+    ${snapinstall} $3
+  elif [ "$2" = remove ] || [ "$2" = re ]; then
+    ${snapremove} $3
+  elif [ "$2" = clean ] || [ "$2" = cl ]; then
+    ${snapclean}
+  elif [ "$2" = autoremove ] || [ "$2" = au ]; then
+    ${snapautoremove}
+  elif [ "$2" = search ] || [ "$2" = se ]; then
+    ${snapsearch} $3
+  elif [ "$2" = info ] || [ "$2" = inf ]; then
+    ${snapinfo} $3
+  elif [ "$2" = upgrade ] || [ "$2" = up ]; then
+    ${snapupgrade}
+  fi
+elif [ "$1" = --pip ] || [ "$1" = -pip ] || [ "$1" = -p ]; then
+  if [ "$2" = install ] || [ "$2" = in ]; then
+    ${pipinstall} $3
+  elif [ "$2" = remove ] || [ "$2" = re ]; then
+    ${pipremove} $3
+  elif [ "$2" = clean ] || [ "$2" = cl ]; then
+    ${pipclean}
+  elif [ "$2" = autoremove ] || [ "$2" = au ]; then
+    ${pipautoremove}
+  elif [ "$2" = search ] || [ "$2" = se ]; then
+    ${pipsearch} $3
+  elif [ "$2" = info ] || [ "$2" = inf ]; then
+    ${pipinfo} $3
+  elif [ "$2" = upgrade ] || [ "$2" = up ]; then
+    ${pipupgrade}
+  fi
+elif [ "$1" = --yay ] || [ "$1" = -yay ] || [ "$1" = -y ]; then
+  if [ "$2" = install ] || [ "$2" = in ]; then
+    ${yayinstall} $3
+  elif [ "$2" = remove ] || [ "$2" = re ]; then
+    ${yayremove} $3
+  elif [ "$2" = clean ] || [ "$2" = cl ]; then
+    ${yayclean}
+  elif [ "$2" = autoremove ] || [ "$2" = au ]; then
+    ${yayautoremove}
+  elif [ "$2" = search ] || [ "$2" = se ]; then
+    ${yaysearch} $3
+  elif [ "$2" = info ] || [ "$2" = inf ]; then
+    ${yayinfo} $3
+  elif [ "$2" = upgrade ] || [ "$2" = up ]; then
+    ${flatpakupgrade}
+  fi
+elif [ "$1" = --paru ] || [ "$1" = -paru ] || [ "$1" = -pa ]; then
+  if [ "$2" = install ] || [ "$2" = in ]; then
+    ${paruinstall} $3
+  elif [ "$2" = remove ] || [ "$2" = re ]; then
+    ${paruremove} $3
+  elif [ "$2" = clean ] || [ "$2" = cl ]; then
+    ${paruclean}
+  elif [ "$2" = autoremove ] || [ "$2" = au ]; then
+    ${paruautoremove}
+  elif [ "$2" = search ] || [ "$2" = se ]; then
+    ${parusearch} $3
+  elif [ "$2" = info ] || [ "$2" = inf ]; then
+    ${paruinfo} $3
+  elif [ "$2" = upgrade ] || [ "$2" = up ]; then
+    ${paruupgrade}
+  fi
 fi
